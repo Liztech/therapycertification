@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Credential Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    header, footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      margin: 20px;
+    }
+
+    #document-section {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .credential-container {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    select, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    label, select, input[type="file"], progress {
+      display: block;
+    }
+
+    progress {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Provider Credential Page</h1>
+  </header>
+
+  <main>
+    <section id="provider-info">
+      <!-- Provider information section -->
+    </section>
+
+    <section id="document-section">
+      <h2>Upload Credentials</h2>
+
+      <div class="credential-container">
+        <label for="certification-dropdown">Select Certification:</label>
+        <select id="certification-dropdown">
+          <option value="licensed-therapist">Licensed Therapist</option>
+          <option value="clinical-psychologist">Clinical Psychologist</option>
+          <option value="certified-counselor">Certified Counselor</option>
+          <!-- Add more certification options as needed -->
+        </select>
+
+        <div id="upload-container">
+          <input type="file" class="file-input" multiple>
+          <label for="file-input">Add Document</label>
+          <progress value="0" max="100" class="upload-progress"></progress>
+        </div>
+
+        <ul class="document-list">
+          <!-- List of uploaded documents goes here -->
+        </ul>
+      </div>
+
+      <button onclick="submitDocuments()">Submit</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Provider Credential Page</p>
+  </footer>
+
+  <script>
+    const addCredentialButton = document.getElementById('add-credential-button');
+    const documentSection = document.getElementById('document-section');
+
+    addCredentialButton.addEventListener('click', addCredentialSection);
+
+    function addCredentialSection() {
+      const newCredentialContainer = document.createElement('div');
+      newCredentialContainer.classList.add('credential-container');
+
+      newCredentialContainer.innerHTML = `
+        <label for="certification-dropdown">Select Certification:</label>
+        <select class="certification-dropdown">
+          <option value="licensed-therapist">Licensed Therapist</option>
+          <option value="clinical-psychologist">Clinical Psychologist</option>
+          <option value="certified-counselor">Certified Counselor</option>
+          <!-- Add more certification options as needed -->
+        </select>
+
+        <div class="upload-container">
+          <input type="file" class="file-input" multiple>
+          <label for="file-input">Add Document</label>
+          <progress value="0" max="100" class="upload-progress"></progress>
+        </div>
+
+        <ul class="document-list">
+          <!-- List of uploaded documents goes here -->
+        </ul>
+      `;
+
+      documentSection.appendChild(newCredentialContainer);
+    }
+
+    function handleFileSelect(event) {
+      const fileList = event.target.files;
+      const documentList = event.target.nextElementSibling.nextElementSibling;
+
+      // Clear existing list
+      documentList.innerHTML = '';
+
+      // Display the selected files
+      for (const file of fileList) {
+        const listItem = document.createElement('li');
+        listItem.textContent = file.name;
+        documentList.appendChild(listItem);
+      }
+    }
+
+    function submitDocuments() {
+      // Add logic to handle document submission
+      const progressElements = document.querySelectorAll('.upload-progress');
+
+      progressElements.forEach((progress) => {
+        // Simulate a delay for demonstration purposes
+        let value = 0;
+        const interval = setInterval(() => {
+          value += 10;
+          progress.value = value;
+
+          if (value >= 100) {
+            clearInterval(interval);
+            alert('Documents submitted successfully!');
+            // Add further submission logic here
+          }
+        }, 500);
+      });
+    }
+
+    // Attach event listeners to file inputs
+    const fileInputs = document.querySelectorAll('.file-input');
+    fileInputs.forEach((fileInput) => {
+      fileInput.addEventListener('change', handleFileSelect);
+    });
+  </script>
+</body>
+</html>
